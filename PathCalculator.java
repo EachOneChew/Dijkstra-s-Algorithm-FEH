@@ -127,33 +127,38 @@ public class PathCalculator
         {
             int currentNodeDistance = findNode(currentCoordinates).getCurrentDistance();
 
-            ArrayList<Inteter[]> neighboursToCheck = new ArrayList<Inteter[]>();
-            if (currentCoordinates[1] >= 1) {
+            ArrayList<Integer[]> adjacentNodes = new ArrayList<Integer[]>();
+            if (currentCoordinates[1] >= 1)
+            {
                 Integer[] upCoordinates = {currentCoordinates[0], currentCoordinates[1] - 1};
-                neighboursToCheck.add(upCoordinates);
+                adjacentNodes.add(upCoordinates);
             }
-            if (currentCoordinates[1] < labelBoard.length - 1) {
+            if (currentCoordinates[1] < labeledBoard.length - 1)
+            {
                 Integer[] downCoordinates = {currentCoordinates[0], currentCoordinates[1] + 1};
-                neighboursToCheck.add(downCoordinates);
+                adjacentNodes.add(downCoordinates);
             }
-            if (currentCoordinates[0] >= 1) {
+            if (currentCoordinates[0] >= 1)
+            {
                 Integer[] leftCoordinates = {currentCoordinates[0] - 1, currentCoordinates[1]};
-                neighboursToCheck.add(leftCoordinates);
+                adjacentNodes.add(leftCoordinates);
             }
-            if (currentCoordinates[0] < labelBoard[0].length - 1) {
+            if (currentCoordinates[0] < labeledBoard[0].length - 1)
+            {
                 Integer[] rightCoordinates = {currentCoordinates[0] + 1, currentCoordinates[1]};
-                neighboursToCheck.add(rightCoordinates);
+                adjacentNodes.add(rightCoordinates);
             }
 
-            for (Integer[] coord : neighboursToCheck) {
-                if (!findNode(coord).getIsTraversed() && findNode(coord).getDelay() != -1) {
-                    Node node = findNode(coord);
-                    node.setCurrentDistance(Math.min(
-                        currentNodeDistance + node.getDelay() + 1,
-                        node.getCurrentDistance()
-                    ));
-                    if (!toVisit.contains(coord)) {
-                        toVisit.add(coord);
+            for (Integer[] curCoordinates: adjacentNodes)
+            {
+                if (!findNode(curCoordinates).getIsTraversed() && findNode(curCoordinates).getDelay() != -1)
+                {
+                    Node temp = findNode(curCoordinates);
+                    temp.setCurrentDistance(Math.min
+                    (currentNodeDistance + temp.getDelay() + 1, temp.getCurrentDistance()));
+                    if (!toVisit.contains(curCoordinates))
+                    {
+                        toVisit.add(curCoordinates);
                     }
                 }
             }
