@@ -183,6 +183,8 @@ public class PathCalculator
             findNode(currentCoordinates).setIsTraversed(true);
             // moving onto the next node to visit
             currentCoordinates = findMinDistanceNode(toVisit);
+            // delete it from toVisit
+            toVisit.remove(currentCoordinates);
             if (toVisit.isEmpty())
             {
                 break;

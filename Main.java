@@ -5,10 +5,10 @@ class Main
       // testing stuff
       char[][] test =
       {
-          {'o', 'o', 'f', 'o', 'o'}, 
-          {'o', 'o', 'w', 'o', 'o'}, 
-          {'o', 'o', 'f', 'o', 'o'}, 
-          {'o', 'o', 'o', 'f', 'o'}
+        {'o', 'o', 'o', 't', 'o'}, 
+        {'o', 'o', 'w', 'o', 'o'}, 
+        {'o', 'o', 't', 'o', 'o'}, 
+        {'o', 'o', 'o', 'f', 'o'}
       };
 
       Integer[] _unit = {0, 1};
@@ -18,12 +18,12 @@ class Main
       Integer[] _target4 = {4, 3};
 
       PathCalculator testPathCalculator = new PathCalculator
-      (test, 'i', _unit, _target1, _target2, _target3, _target4);
+      (test, 'c', _unit, _target1, _target2, _target3, _target4);
 
       testPathCalculator.labelBoard();
       Node[][] testLabeledBoard = testPathCalculator.getLabeledBoard();
 
-      System.out.println(testPathCalculator.solveDistance());
+      System.out.println(testPathCalculator.solveDistance()[0] + " " + testPathCalculator.solveDistance()[1]);
 
       // print the labeledBoard
       for (int i = 0; i < testLabeledBoard.length; i++)
