@@ -42,9 +42,7 @@ solvePath returns:
 
 Once everything is done, "clearLabeledBoard" should be called to clear that field of a PathCalculator.
 
----------------------------------------------------------
-
-# TODO
+## TODO
 * Create basic unit tests
 * Set up build script
 * Hook up to CI (travis or circleci)
