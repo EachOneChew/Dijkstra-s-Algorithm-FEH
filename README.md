@@ -4,8 +4,6 @@ A PathCalculator's solveDistance method takes in the following inputs:
 
 * char[ ][ ] "board" where:
     * 'o' represents a regular tile
-    * 'x' represents a tile occupied by an allied unit
-    * 'y" represents a tile occupied by an enemy unit
     * 'f' represents a forest
     * 'm' represents a mountain
     * 'l' represents a liquid (water/pond/lava)

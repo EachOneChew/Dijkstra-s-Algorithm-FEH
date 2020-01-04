@@ -1,3 +1,12 @@
+import java.util.ArrayList;
+
+// EXTREMELY IMPORTANT NOTE:
+// assuming a 2d array is looked at as a cartesian plane
+// the coordinates (x, y) are actually accessed by doing [y][x]
+// this is because 2d arrays are in the form [row][column]
+// also, moving up in a 2d array is subtracting from index, vice versa
+// so a 2d array is really a cartesian axis flipped upside down
+
 public class PathCalculator
 {
     private char[][] board;
@@ -5,11 +14,11 @@ public class PathCalculator
     // movetype of unit
     private char moveType;
     // the following are coordinates
-    private int[] unit;
-    private int[] target1;
-    private int[] target2;
-    private int[] target3;
-    private int[] target4;
+    private Integer[] unit;
+    private Integer[] target1;
+    private Integer[] target2;
+    private Integer[] target3;
+    private Integer[] target4;
     // chart to lookup delays for movement type in relation to terrain type
     //    o   f   m   l   w   t
     // i
@@ -26,7 +35,7 @@ public class PathCalculator
 
     public PathCalculator
     (char[][] _board, char _moveType,
-    int[] _unit, int[] _target1, int[] _target2, int[] _target3, int[] _target4)
+    Integer[] _unit, Integer[] _target1, Integer[] _target2, Integer[] _target3, Integer[] _target4)
     {
         board = _board;
         labeledBoard = new Node[_board.length][_board[0].length];
@@ -65,6 +74,7 @@ public class PathCalculator
             for (int j = 0; j < board[i].length; j++)
             {
                 char cur = board[i][j];
+                // assigns a lookup column number depending on the current tile type
                 int delayChartColumnNumber = 0;
                 if (cur == 'o')
                 {
@@ -90,10 +100,129 @@ public class PathCalculator
                 {
                     delayChartColumnNumber = 5;
                 }
+                // look up the delay in the delayChart
                 int delay = delayChart[delayChartRowNumber][delayChartColumnNumber];
+                // label the node in the labeledBoard
                 labeledBoard[i][j] = new Node(false, Integer.MAX_VALUE, delay);
             }
         }
+    }
+
+    // see README.md for what solveDistance does
+    // should be private because it's wrapped inside solvePath
+    public Integer[] solveDistance()
+    {
+        ArrayList<Integer[]> toVisit = new ArrayList<Integer[]>();
+        // current node is initial unit position
+        Integer[] currentCoordinates = {unit[0], unit[1]};
+        // distance from current node to current node is 0
+        findNode(currentCoordinates).setCurrentDistance(0);
+        
+        // now start the algorithm's loop
+        while
+        (!(findNode(target1).getIsTraversed()
+        && findNode(target2).getIsTraversed()
+        && findNode(target3).getIsTraversed()
+        && findNode(target4).getIsTraversed()))
+        {
+            int currentNodeDistance = findNode(currentCoordinates).getCurrentDistance();
+
+            Integer[] upCoordinates = {currentCoordinates[0], currentCoordinates[1] - 1};
+            Integer[] downCoordinates = {currentCoordinates[0], currentCoordinates[1] + 1};
+            Integer[] leftCoordinates = {currentCoordinates[0] - 1, currentCoordinates[1]};
+            Integer[] rightCoordinates = {currentCoordinates[0] + 1, currentCoordinates[1]};
+
+            if (upCoordinates[1] >= 0
+            && !findNode(upCoordinates).getIsTraversed()
+            && findNode(upCoordinates).getDelay() != -1)
+            {
+                Node upNode = findNode(upCoordinates);
+                upNode.setCurrentDistance(Math.min
+                (currentNodeDistance + upNode.getDelay() + 1, upNode.getCurrentDistance()));
+                if (!toVisit.contains(upCoordinates))
+                {
+                    toVisit.add(upCoordinates);
+                }
+            }
+            if (downCoordinates[1] < labeledBoard.length
+            && !findNode(downCoordinates).getIsTraversed()
+            && findNode(downCoordinates).getDelay() != -1)
+            {
+                Node downNode = findNode(downCoordinates);
+                downNode.setCurrentDistance(Math.min
+                (currentNodeDistance + downNode.getDelay() + 1, downNode.getCurrentDistance()));
+                if (!toVisit.contains(downCoordinates))
+                {
+                    toVisit.add(downCoordinates);
+                }
+            }
+            if (leftCoordinates[0] >= 0
+            && !findNode(leftCoordinates).getIsTraversed()
+            && findNode(leftCoordinates).getDelay() != -1)
+            {
+                Node leftNode = findNode(leftCoordinates);
+                leftNode.setCurrentDistance(Math.min
+                (currentNodeDistance + leftNode.getDelay() + 1, leftNode.getCurrentDistance()));
+                if (!toVisit.contains(leftCoordinates))
+                {
+                    toVisit.add(leftCoordinates);
+                }
+            }
+            if (rightCoordinates[0] < labeledBoard[0].length
+            && !findNode(rightCoordinates).getIsTraversed()
+            && findNode(rightCoordinates).getDelay() != -1)
+            {
+                Node rightNode = findNode(rightCoordinates);
+                rightNode.setCurrentDistance(Math.min
+                (currentNodeDistance + rightNode.getDelay() + 1, rightNode.getCurrentDistance()));
+                if (!toVisit.contains(rightCoordinates))
+                {
+                    toVisit.add(rightCoordinates);
+                }
+            }
+            findNode(currentCoordinates).setIsTraversed(true);
+            // moving onto the next node to visit
+            currentCoordinates = findMinDistanceNode(toVisit);
+            // delete it from toVisit
+            toVisit.remove(currentCoordinates);
+            if (toVisit.isEmpty())
+            {
+                break;
+            }
+        }
+
+        // put the 4 target coordinates into an ArrayList
+        ArrayList<Integer[]> targetCoordinates = new ArrayList<Integer[]>();
+        targetCoordinates.add(target1);
+        targetCoordinates.add(target2);
+        targetCoordinates.add(target3);
+        targetCoordinates.add(target4);
+        // search the ArrayList for the one with the node of smallest distance
+        return findMinDistanceNode(targetCoordinates);
+    }
+
+    // takes an ArrayList of int[] coordinates
+    // returns coordinates of the node with smallest distance value
+    private Integer[] findMinDistanceNode(ArrayList<Integer[]> input)
+    {
+        int curMininum = Integer.MAX_VALUE;
+        Integer[] curMinimumCoordinates = new Integer[2];
+        for (int i = 0; i < input.size(); i++)
+        {
+            int temp = findNode(input.get(i)).getCurrentDistance();
+            if (temp < curMininum)
+            {
+                curMininum = temp;
+                curMinimumCoordinates = input.get(i);
+            }            
+        }
+        return curMinimumCoordinates;
+    }
+
+    // takes int[] coordinates and finds the corresponding node in labeledBoard
+    private Node findNode(Integer[] coordinates)
+    {
+        return labeledBoard[coordinates[1]][coordinates[0]];
     }
 
     // getter methods

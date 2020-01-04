@@ -28,4 +28,20 @@ public class Node
     {
         return delay;
     }
+
+    // setter methods
+    public void setIsTraversed(boolean input)
+    {
+        isTraversed = input;
+    }
+
+    public void setCurrentDistance(int input)
+    {
+        currentDistance = input;
+    }
+
+    public void setDelay (int input)
+    {
+        delay = input;
+    }
 }
