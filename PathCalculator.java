@@ -127,59 +127,37 @@ public class PathCalculator
         {
             int currentNodeDistance = findNode(currentCoordinates).getCurrentDistance();
 
-            Integer[] upCoordinates = {currentCoordinates[0], currentCoordinates[1] - 1};
-            Integer[] downCoordinates = {currentCoordinates[0], currentCoordinates[1] + 1};
-            Integer[] leftCoordinates = {currentCoordinates[0] - 1, currentCoordinates[1]};
-            Integer[] rightCoordinates = {currentCoordinates[0] + 1, currentCoordinates[1]};
+            ArrayList<Inteter[]> neighboursToCheck = new ArrayList<Inteter[]>();
+            if (currentCoordinates[1] >= 1) {
+                Integer[] upCoordinates = {currentCoordinates[0], currentCoordinates[1] - 1};
+                neighboursToCheck.add(upCoordinates);
+            }
+            if (currentCoordinates[1] < labelBoard.length - 1) {
+                Integer[] downCoordinates = {currentCoordinates[0], currentCoordinates[1] + 1};
+                neighboursToCheck.add(downCoordinates);
+            }
+            if (currentCoordinates[0] >= 1) {
+                Integer[] leftCoordinates = {currentCoordinates[0] - 1, currentCoordinates[1]};
+                neighboursToCheck.add(leftCoordinates);
+            }
+            if (currentCoordinates[0] < labelBoard[0].length - 1) {
+                Integer[] rightCoordinates = {currentCoordinates[0] + 1, currentCoordinates[1]};
+                neighboursToCheck.add(rightCoordinates);
+            }
 
-            if (upCoordinates[1] >= 0
-            && !findNode(upCoordinates).getIsTraversed()
-            && findNode(upCoordinates).getDelay() != -1)
-            {
-                Node upNode = findNode(upCoordinates);
-                upNode.setCurrentDistance(Math.min
-                (currentNodeDistance + upNode.getDelay() + 1, upNode.getCurrentDistance()));
-                if (!toVisit.contains(upCoordinates))
-                {
-                    toVisit.add(upCoordinates);
+            for (Inteter[] coord : neighboursToCheck) {
+                if (!findNode(coord).getIsTraversed() && findNode(coord).getDelay() != -1) {
+                    Node node = findNode(coord);
+                    node.setCurrentDistance(Math.min(
+                        currentNodeDistance + node.getDelay() + 1,
+                        node.getCurrentDistance()
+                    ));
+                    if (!toVisit.contains(coord)) {
+                        toVisit.add(coord);
+                    }
                 }
             }
-            if (downCoordinates[1] < labeledBoard.length
-            && !findNode(downCoordinates).getIsTraversed()
-            && findNode(downCoordinates).getDelay() != -1)
-            {
-                Node downNode = findNode(downCoordinates);
-                downNode.setCurrentDistance(Math.min
-                (currentNodeDistance + downNode.getDelay() + 1, downNode.getCurrentDistance()));
-                if (!toVisit.contains(downCoordinates))
-                {
-                    toVisit.add(downCoordinates);
-                }
-            }
-            if (leftCoordinates[0] >= 0
-            && !findNode(leftCoordinates).getIsTraversed()
-            && findNode(leftCoordinates).getDelay() != -1)
-            {
-                Node leftNode = findNode(leftCoordinates);
-                leftNode.setCurrentDistance(Math.min
-                (currentNodeDistance + leftNode.getDelay() + 1, leftNode.getCurrentDistance()));
-                if (!toVisit.contains(leftCoordinates))
-                {
-                    toVisit.add(leftCoordinates);
-                }
-            }
-            if (rightCoordinates[0] < labeledBoard[0].length
-            && !findNode(rightCoordinates).getIsTraversed()
-            && findNode(rightCoordinates).getDelay() != -1)
-            {
-                Node rightNode = findNode(rightCoordinates);
-                rightNode.setCurrentDistance(Math.min
-                (currentNodeDistance + rightNode.getDelay() + 1, rightNode.getCurrentDistance()));
-                if (!toVisit.contains(rightCoordinates))
-                {
-                    toVisit.add(rightCoordinates);
-                }
-            }
+            
             findNode(currentCoordinates).setIsTraversed(true);
             // moving onto the next node to visit
             currentCoordinates = findMinDistanceNode(toVisit);
