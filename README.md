@@ -1,4 +1,6 @@
-## How to Use PathCalculator
+[![Build Status](https://travis-ci.org/EachOneChew/Dijkstra-s-Algorithm-FEH.svg?branch=master)](https://travis-ci.org/EachOneChew/Dijkstra-s-Algorithm-FEH)
+
+# How to Use PathCalculator
 
 A PathCalculator's solveDistance method takes in the following inputs:
 
@@ -40,7 +42,8 @@ solvePath returns:
 
 Once everything is done, "clearFields" should be called to clear all fields of a PathCalculator. Alternatively, a new PathCalculator can be created and the current one discarded.
 
-## TODO
-* Create basic unit tests
-* Set up build script
-* Hook up to CI (travis or circleci)
+# TODO
+
+* create basic unit tests
+* set up build script
+* hook up to CI (travis or circleci)
