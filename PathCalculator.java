@@ -145,7 +145,7 @@ public class PathCalculator
                 neighboursToCheck.add(rightCoordinates);
             }
 
-            for (Inteter[] coord : neighboursToCheck) {
+            for (Integer[] coord : neighboursToCheck) {
                 if (!findNode(coord).getIsTraversed() && findNode(coord).getDelay() != -1) {
                     Node node = findNode(coord);
                     node.setCurrentDistance(Math.min(
