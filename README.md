@@ -38,7 +38,7 @@ solvePath returns:
 
 * ArrayList<ArrayList<Integer>> representing the shortest paths from unit to target - often only 1 element
 
-Once everything is done, "clearLabeledBoard" should be called to clear that field of a PathCalculator.
+Once everything is done, "clearFields" should be called to clear all fields of a PathCalculator. Alternatively, a new PathCalculator can be created and the current one discarded.
 
 ## TODO
 * Create basic unit tests
