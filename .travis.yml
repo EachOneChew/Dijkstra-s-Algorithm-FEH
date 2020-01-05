@@ -1,5 +1,5 @@
 language: java
-install: ant deps
+install: ant compile
 script:
   - ant test
   - javac *.java
