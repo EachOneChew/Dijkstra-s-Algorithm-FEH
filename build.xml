@@ -6,7 +6,7 @@
     <property name="build" location="build"/>
     <target name="init">
         <tstamp/>
-        <mkdir dir="${build}">
+        <mkdir dir="${build}"/>
     </target>
     <target name="compile" depends="init">
         <javac srcdir="${src}" destdir="${build}"/>
