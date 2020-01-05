@@ -1,5 +1,5 @@
 language: java
-install: ant --version
+install: ant -version
 script:
   - ant compile
   - dir build/*
