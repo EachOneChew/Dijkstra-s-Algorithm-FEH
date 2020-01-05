@@ -45,5 +45,5 @@ Once everything is done, "clearFields" should be called to clear all fields of a
 # TODO
 
    - [ ] create basic unit tests
-   - [ ] set up build script
+   - [x] set up build script
    - [x] hook up to CI (travis or circleci)
