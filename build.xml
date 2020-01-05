@@ -3,7 +3,7 @@
         Minimal build file for PathCalculator
     </description>
     <target name="compile">
-        <javac *.java/>
+        <javac ./>
     </target>
     <target name="test" depends="compile">
         <java Main/>
