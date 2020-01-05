@@ -1,8 +1,12 @@
 [![Build Status](https://travis-ci.org/EachOneChew/Dijkstra-s-Algorithm-FEH.svg?branch=master)](https://travis-ci.org/EachOneChew/Dijkstra-s-Algorithm-FEH)
 
+# What is this repo about
+
+# Who may be interested in this repo
+
 # How to Use PathCalculator
 
-A PathCalculator's solveDistance method takes in the following inputs:
+A PathCalculator's `solveDistance` method takes in the following inputs:
 
 * char[ ][ ] "board" where:
     * 'o' represents a regular tile
