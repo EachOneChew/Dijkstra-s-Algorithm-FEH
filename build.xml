@@ -11,7 +11,7 @@
     <target name="compile" depends="init">
         <javac srcdir="${src}" destdir="${build}"/>
     </target>
-    <target name="test" depends="compile">
+    <!-- <target name="test" depends="compile">
         <java Main/>
-    </target>
+    </target> -->
 </project>
