@@ -1,6 +1,5 @@
 language: java
-install: ant compile
+install: ant deps
 script:
-  - ant test
-  - javac *.java
-  - java Main
+  - ant compile
+  - java src/Main
