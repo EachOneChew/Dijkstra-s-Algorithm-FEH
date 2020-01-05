@@ -2,4 +2,5 @@ language: java
 install: ant
 script:
   - ant compile
-  - java src/Main
+  - cd src
+  - java Main
