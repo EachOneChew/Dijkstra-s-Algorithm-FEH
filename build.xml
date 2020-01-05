@@ -1,0 +1,11 @@
+<project name="PathCalculator">
+    <description>
+        Minimal build file for PathCalculator
+    </description>
+    <target name="compile">
+        <javac *.java/>
+    </target>
+    <target name="test" depends="compile">
+        <java Main/>
+    </target>
+</project>
