@@ -1,4 +1,7 @@
 language: java
+install: ant -version
 script:
-  - javac *.java
+  - ant compile
+  - dir build/*
+  - cd build
   - java Main

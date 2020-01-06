@@ -1,0 +1,17 @@
+<project name="PathCalculator">
+    <description>
+        Minimal build file for PathCalculator
+    </description>
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build}"/>
+    </target>
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build}"/>
+    </target>
+    <!-- <target name="test" depends="compile">
+        <java Main/>
+    </target> -->
+</project>
