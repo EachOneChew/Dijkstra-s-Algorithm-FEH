@@ -217,18 +217,16 @@ public class DistanceCalculator
                 {
                     temp.setCurrentDistance
                     (Math.min(currentNodeDistance + temp.getDelay() + 1, temp.getCurrentDistance()));
-                    if (!toVisit.contains(curCoordinates))
-                    {
-                        toVisit.add(curCoordinates);
-                    }
+                    toVisit.add(curCoordinates);
                 }
             }
             
-            findNode(labeledBoard, currentCoordinates).setIsTraversed(true);
-            // moving onto the next node to visit
-            currentCoordinates = findMinDistanceNode(labeledBoard, toVisit);
             // delete it from toVisit
             toVisit.remove(currentCoordinates);
+            findNode(labeledBoard, currentCoordinates).setIsTraversed(true);
+            // moving onto the next node to visit - update currentCoordinates
+            currentCoordinates = findMinDistanceNode(labeledBoard, toVisit);
+            
             if (toVisit.isEmpty())
             {
                 break;
@@ -347,7 +345,7 @@ public class DistanceCalculator
     {
         return _labeledBoard[coordinates[1]][coordinates[0]];
     }
-
+    
     // getter methods
     public Node[][] getLabeledBoard()
     {

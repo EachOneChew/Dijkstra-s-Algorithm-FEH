@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.EventListener;
 
 class Main
 {
@@ -18,13 +19,13 @@ class Main
       };
 
       Integer[] _unit = {1, 1};
-      Integer[] _target1 = {4, 6};
-      Integer[] _target2 = {5, 6};
-      Integer[] _target3 = {4, 7};
-      Integer[] _target4 = {5, 0};
+      Integer[] _target1 = {4, 4};
+      Integer[] _target2 = {0, 1};
+      Integer[] _target3 = {2, 1};
+      Integer[] _target4 = {1, 2};
 
       DistanceCalculator testDistanceCalculator = new DistanceCalculator
-      (test, 'i', _unit, _target1, _target2, _target3, _target4);
+      (test, 'c', _unit, _target1, _target2, _target3, _target4);
 
       testDistanceCalculator.labelBoard();
       Node[][] testLabeledBoard = testDistanceCalculator.getLabeledBoard();
@@ -41,6 +42,10 @@ class Main
               {
                 System.out.print(temp.getCurrentDistance() + " ");
               }
+              else if (temp.getCurrentDistance() > 9)
+              {
+                System.out.print(temp.getCurrentDistance() + "         ");
+              }
               else
               {
                 System.out.print(temp.getCurrentDistance() + "          ");
@@ -49,7 +54,8 @@ class Main
           System.out.println("");
       }
 
-      ArrayList<Integer[]> testResults = testDistanceCalculator.solvePath(_target4);
+      ArrayList<Integer[]> testResults = testDistanceCalculator.solvePath(_target1);
+
       for (Integer[] i: testResults)
       {
         System.out.println(i[0] + " " + i[1]);
