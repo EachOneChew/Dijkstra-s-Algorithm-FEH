@@ -7,7 +7,7 @@ import java.util.ArrayList;
 // also, moving up in a 2d array is subtracting from index, vice versa
 // so a 2d array is really a cartesian axis flipped upside down
 
-public class PathCalculator
+public class DistanceCalculator
 {
     private char[][] board;
     private Node[][] labeledBoard;
@@ -33,7 +33,7 @@ public class PathCalculator
         {0,  0,  0,  0, -1,  0} 
     };
 
-    public PathCalculator
+    public DistanceCalculator
     (char[][] _board, char _moveType,
     Integer[] _unit, Integer[] _target1, Integer[] _target2, Integer[] _target3, Integer[] _target4)
     {
@@ -45,6 +45,18 @@ public class PathCalculator
         target2 = _target2;
         target3 = _target3;
         target4 = _target4;
+    }
+
+    // for just distance from a to b
+    public DistanceCalculator
+    (char[][] _board, char _moveType,
+    Integer[] _unit, Integer[] _target1)
+    {
+        board = _board;
+        labeledBoard = new Node[_board.length][_board[0].length];
+        moveType = _moveType;
+        unit = _unit;
+        target1 = _target1;
     }
 
     // convert a char[][] board "game field" of FEH into a labeledBoard
@@ -106,11 +118,17 @@ public class PathCalculator
                 labeledBoard[i][j] = new Node(false, Integer.MAX_VALUE, delay);
             }
         }
+
+        // enemies are effectively walls
+        findNode(target1).setDelay(-1);
+        findNode(target2).setDelay(-1);
+        findNode(target3).setDelay(-1);
+        findNode(target4).setDelay(-1);
     }
 
     // see README.md for what solveDistance does
     // should be private because it's wrapped inside solvePath
-    public Integer[] solveDistance()
+    public void solveDistance()
     {
         ArrayList<Integer[]> toVisit = new ArrayList<Integer[]>();
         // current node is initial unit position
@@ -119,11 +137,11 @@ public class PathCalculator
         findNode(currentCoordinates).setCurrentDistance(0);
         
         // now start the algorithm's loop
-        while
-        (!(findNode(target1).getIsTraversed()
-        && findNode(target2).getIsTraversed()
-        && findNode(target3).getIsTraversed()
-        && findNode(target4).getIsTraversed()))
+        while (true)
+        // (!(findNode(target1).getIsTraversed()
+        // && findNode(target2).getIsTraversed()
+        // && findNode(target3).getIsTraversed()
+        // && findNode(target4).getIsTraversed()))
         {
             int currentNodeDistance = findNode(currentCoordinates).getCurrentDistance();
 
@@ -173,15 +191,6 @@ public class PathCalculator
                 break;
             }
         }
-
-        // put the 4 target coordinates into an ArrayList
-        ArrayList<Integer[]> targetCoordinates = new ArrayList<Integer[]>();
-        targetCoordinates.add(target1);
-        targetCoordinates.add(target2);
-        targetCoordinates.add(target3);
-        targetCoordinates.add(target4);
-        // search the ArrayList for the one with the node of smallest distance
-        return findMinDistanceNode(targetCoordinates);
     }
 
     // takes an ArrayList of int[] coordinates
@@ -201,6 +210,22 @@ public class PathCalculator
         }
         return curMinimumCoordinates;
     }
+
+    // when done this should be multipurpose, for both enemy and assist target selection
+    public Integer[] determineTarget()
+    {
+        Integer[] boo = {0, 0};
+        return boo;
+    }
+
+    // // solvePath does not need unit coordinates because that's already a field
+    // public ArrayList<Integer[]> solvePath (Integer[] _target)
+    // {
+    //     DistanceCalculator centeredOnTarget = new DistanceCalculator(board, moveType, _target, unit);
+    //     centeredOnTarget.solveDistance();
+
+        
+    // }
 
     // takes int[] coordinates and finds the corresponding node in labeledBoard
     private Node findNode(Integer[] coordinates)

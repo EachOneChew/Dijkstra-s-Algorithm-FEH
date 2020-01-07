@@ -8,7 +8,9 @@ class Main
         {'o', 'o', 'o', 't', 'o'}, 
         {'o', 'o', 'w', 'o', 'o'}, 
         {'o', 'o', 't', 'o', 'o'}, 
-        {'o', 'o', 'o', 'f', 'o'}
+        {'o', 'o', 'o', 'f', 'o'}, 
+        {'o', 'w', 'w', 'f', 'o'}, 
+        {'o', 'o', 'w', 'f', 'o'}
       };
 
       Integer[] _unit = {0, 1};
@@ -17,13 +19,13 @@ class Main
       Integer[] _target3 = {4, 2};
       Integer[] _target4 = {4, 3};
 
-      PathCalculator testPathCalculator = new PathCalculator
+      DistanceCalculator testDistanceCalculator = new DistanceCalculator
       (test, 'c', _unit, _target1, _target2, _target3, _target4);
 
-      testPathCalculator.labelBoard();
-      Node[][] testLabeledBoard = testPathCalculator.getLabeledBoard();
+      testDistanceCalculator.labelBoard();
+      Node[][] testLabeledBoard = testDistanceCalculator.getLabeledBoard();
 
-      System.out.println(testPathCalculator.solveDistance()[0] + " " + testPathCalculator.solveDistance()[1]);
+      testDistanceCalculator.solveDistance();
 
       // print the labeledBoard
       for (int i = 0; i < testLabeledBoard.length; i++)
@@ -31,7 +33,14 @@ class Main
           for (int j = 0; j < testLabeledBoard[i].length; j++)
           {
               Node temp = testLabeledBoard[i][j];
-              System.out.print(temp.getCurrentDistance() + " ");
+              if (temp.getCurrentDistance() > 9999)
+              {
+                System.out.print(temp.getCurrentDistance() + " ");
+              }
+              else
+              {
+                System.out.print(temp.getCurrentDistance() + "          ");
+              }
           }
           System.out.println("");
       }
