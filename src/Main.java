@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class Main
 {
   public static void main(String[] args)
@@ -5,22 +7,24 @@ class Main
       // testing stuff
       char[][] test =
       {
-        {'o', 'o', 'o', 't', 'o'}, 
-        {'o', 'o', 'w', 'o', 'o'}, 
-        {'o', 'o', 't', 'o', 'o'}, 
-        {'o', 'o', 'o', 'f', 'o'}, 
-        {'o', 'w', 'w', 'f', 'o'}, 
-        {'o', 'o', 'w', 'f', 'o'}
+        {'o', 'o', 'o', 'o', 'o', 'o'}, 
+        {'o', 'o', 'o', 'o', 'o', 'o'}, 
+        {'o', 'o', 'o', 'o', 'o', 'o'}, 
+        {'o', 'o', 'o', 'o', 'o', 'o'}, 
+        {'o', 'o', 'o', 'o', 'o', 'o'}, 
+        {'o', 'o', 'o', 'o', 'o', 'o'}, 
+        {'o', 'o', 'o', 'o', 'o', 'o'}, 
+        {'o', 'o', 'o', 'o', 'o', 'o'}
       };
 
-      Integer[] _unit = {0, 1};
-      Integer[] _target1 = {4, 0};
-      Integer[] _target2 = {4, 1};
-      Integer[] _target3 = {4, 2};
-      Integer[] _target4 = {4, 3};
+      Integer[] _unit = {1, 1};
+      Integer[] _target1 = {4, 6};
+      Integer[] _target2 = {5, 6};
+      Integer[] _target3 = {4, 7};
+      Integer[] _target4 = {5, 0};
 
       DistanceCalculator testDistanceCalculator = new DistanceCalculator
-      (test, 'c', _unit, _target1, _target2, _target3, _target4);
+      (test, 'i', _unit, _target1, _target2, _target3, _target4);
 
       testDistanceCalculator.labelBoard();
       Node[][] testLabeledBoard = testDistanceCalculator.getLabeledBoard();
@@ -45,6 +49,10 @@ class Main
           System.out.println("");
       }
 
-      testDistanceCalculator.solvePath(_target4);
+      ArrayList<Integer[]> testResults = testDistanceCalculator.solvePath(_target4);
+      for (Integer[] i: testResults)
+      {
+        System.out.println(i[0] + " " + i[1]);
+      }
   }
 }

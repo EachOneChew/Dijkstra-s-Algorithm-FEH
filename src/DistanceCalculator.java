@@ -147,18 +147,20 @@ public class DistanceCalculator
             }
         }
 
-        // enemies are effectively walls
-        findNode(labeledBoard, target1).setDelay(-1);
+        // enemies get "special" delay label as -2
+        // which means their distance will still be set by solveDistance
+        // however, they cannot be traversed:
+        // they are not added to toVisit in solveDistance
+        findNode(labeledBoard, target1).setDelay(-2);
         if (!singleTarget)
         {
-            findNode(labeledBoard, target2).setDelay(-1);
-            findNode(labeledBoard, target3).setDelay(-1);
-            findNode(labeledBoard, target4).setDelay(-1);
+            findNode(labeledBoard, target2).setDelay(-2);
+            findNode(labeledBoard, target3).setDelay(-2);
+            findNode(labeledBoard, target4).setDelay(-2);
         }
     }
 
     // see README.md for what solveDistance does
-    // should be private because it's wrapped inside solvePath
     public void solveDistance()
     {
         ArrayList<Integer[]> toVisit = new ArrayList<Integer[]>();
@@ -201,12 +203,20 @@ public class DistanceCalculator
 
             for (Integer[] curCoordinates: adjacentNodes)
             {
-                if (!findNode(labeledBoard, curCoordinates).getIsTraversed()
-                && findNode(labeledBoard, curCoordinates).getDelay() != -1)
+                Node temp = findNode(labeledBoard, curCoordinates);
+                // if the delay is -2, the node is occupied by an enemy unit
+                // thus, it's distance should still be calculated, BUT
+                // the node should not be considered as being along any path
+                // Tl;Dr this tile is now an untraversable obstacle with a distance value
+                if (temp.getDelay() == -2)
                 {
-                    Node temp = findNode(labeledBoard, curCoordinates);
-                    temp.setCurrentDistance(Math.min
-                    (currentNodeDistance + temp.getDelay() + 1, temp.getCurrentDistance()));
+                    temp.setCurrentDistance
+                    (Math.min(currentNodeDistance + 1, temp.getCurrentDistance()));
+                }
+                else if (!temp.getIsTraversed() && temp.getDelay() != -1)
+                {
+                    temp.setCurrentDistance
+                    (Math.min(currentNodeDistance + temp.getDelay() + 1, temp.getCurrentDistance()));
                     if (!toVisit.contains(curCoordinates))
                     {
                         toVisit.add(curCoordinates);
