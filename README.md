@@ -1,8 +1,10 @@
 [![Build Status](https://travis-ci.org/EachOneChew/Dijkstra-s-Algorithm-FEH.svg?branch=master)](https://travis-ci.org/EachOneChew/Dijkstra-s-Algorithm-FEH)
 
-# What is this repo about
+# How to build
 
-# Who may be interested in this repo
+After checking out the repo, run `./build.sh`. Folder `build` would contain compiled Java classes.
+
+We choose `ant` as the build system, which is shipped in the repo's filder `vendor/apache-ant-1.10.7`.
 
 # How to Use DistanceCalculator
 
