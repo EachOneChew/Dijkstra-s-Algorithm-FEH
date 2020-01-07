@@ -44,5 +44,7 @@ class Main
           }
           System.out.println("");
       }
+
+      testDistanceCalculator.solvePath(_target4);
   }
 }
