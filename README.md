@@ -2,9 +2,14 @@
 
 # How to build
 
-After checking out the repo, run `./build.sh`. Folder `build` would contain compiled Java classes.
+After checking out the repo, run `./build.sh`. Folder `build` would contain compiled Java classes. The build process includes style checking of code, compilatin, and running `Main` class as a test.
 
 We choose `ant` as the build system, which is shipped in the repo's folder `vendor/apache-ant-1.10.7`.
+
+You can also test your code by running:
+```
+vendor/apache-ant-1.10.7/bin/ant test
+```
 
 # How to Use DistanceCalculator
 
