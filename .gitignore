@@ -1,1 +1,3 @@
 build/*
+checkstyle_report.xml
+.DS_Store

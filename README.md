@@ -4,7 +4,7 @@
 
 After checking out the repo, run `./build.sh`. Folder `build` would contain compiled Java classes.
 
-We choose `ant` as the build system, which is shipped in the repo's filder `vendor/apache-ant-1.10.7`.
+We choose `ant` as the build system, which is shipped in the repo's folder `vendor/apache-ant-1.10.7`.
 
 # How to Use DistanceCalculator
 

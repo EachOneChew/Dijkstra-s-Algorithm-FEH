@@ -4,14 +4,21 @@
     </description>
     <property name="src" location="src"/>
     <property name="build" location="build"/>
+    <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
+         classpath="./vendor/checkstyle-8.28.jar"/>
     <target name="init">
         <tstamp/>
         <mkdir dir="${build}"/>
+        <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
+            classpath="./vendor/checkstyle-8.28-all.jar"/>
     </target>
-    <target name="compile" depends="init">
+    <target name="checkstyle" depends="init">
+        <checkstyle config="sun_checks.xml">
+            <formatter type="xml" tofile="checkstyle_report.xml"/>
+            <fileset dir="src" includes="**/*.java"/>
+        </checkstyle>
+    </target>
+    <target name="compile" depends="checkstyle">
         <javac srcdir="${src}" destdir="${build}" includeantruntime="false"/>
     </target>
-    <!-- <target name="test" depends="compile">
-        <java Main/>
-    </target> -->
 </project>
