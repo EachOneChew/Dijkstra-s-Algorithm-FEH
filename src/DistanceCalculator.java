@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 // EXTREMELY IMPORTANT NOTE:
 // assuming a 2d array is looked at as a cartesian plane
@@ -382,28 +383,37 @@ public class DistanceCalculator
     private ArrayList<Integer[]> dedupeArrayList(ArrayList<Integer[]> input)
     {
         ArrayList<Integer[]> result = new ArrayList<Integer[]>();
-        ArrayList<Integer[]> alreadyAppeared = new ArrayList<Integer[]>();
+        // ArrayList<Integer[]> alreadyAppeared = new ArrayList<Integer[]>();
 
-        for (Integer[] coord: input)
-        {
-            boolean present = false;
-            for (Integer[] compareCoord: alreadyAppeared)
-            {
-                if (coord[0] == compareCoord[0] && coord[1] == compareCoord[1])
-                {
-                    present = true;
-                }
-            }
-            if (!present)
-            {
+        // for (Integer[] coord: input)
+        // {
+        //     boolean present = false;
+        //     for (Integer[] compareCoord: alreadyAppeared)
+        //     {
+        //         if (coord[0] == compareCoord[0] && coord[1] == compareCoord[1])
+        //         {
+        //             present = true;
+        //         }
+        //     }
+        //     if (!present)
+        //     {
+        //         result.add(coord);
+        //         alreadyAppeared.add(coord);
+        //     }
+        // }
+
+        HashSet<String> alreadyAppeared = new HashSet<String>();
+        for (Integer[] coord: input) {
+            String hashcode = coord[0].toString() + "," + coord[1].toString();
+            if (!alreadyAppeared.contains(hashcode)) {
                 result.add(coord);
-                alreadyAppeared.add(coord);
+                alreadyAppeared.add(hashcode);
             }
         }
 
         return result;
     }
-    
+
     // getter methods
     public Node[][] getLabeledBoard()
     {
