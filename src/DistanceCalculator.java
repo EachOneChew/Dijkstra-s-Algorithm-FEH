@@ -268,7 +268,11 @@ public class DistanceCalculator
             ArrayList<Integer[]> candidateNodes = new ArrayList<Integer[]>();
             
             // although staying in place is an option, we do not consider it in this method
-            // go through neighboring nodes
+            // also, in order for a node on a path to be eligible, it cannot be:
+            // a) a wall
+            // b) an enemy (target)
+            // the reason this conditional check is here instead of the for loop after is because
+            // if the check is performed then, eligibleThreshold would be incorrect
             if (currentNode[1] >= 1)
             {
                 Integer[] upCoordinates = {currentNode[0], currentNode[1] - 1};
