@@ -54,6 +54,10 @@ class Main
           System.out.println("");
       }
 
+      // assert(testLabeledBoard[1][3].getCurrentDistance() == 4);
+      // Fail the build until you fix the bug :-)
+      assert testLabeledBoard[1][3].getCurrentDistance() == 2;
+
       ArrayList<Integer[]> testResults = testDistanceCalculator.solvePath(_target1);
 
       for (Integer[] i: testResults)

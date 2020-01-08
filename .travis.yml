@@ -2,4 +2,4 @@ language: java
 script:
   - ./build.sh
   - cd build
-  - java Main
+  - java -ea Main
