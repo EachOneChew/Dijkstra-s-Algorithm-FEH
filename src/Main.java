@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.EventListener;
 
 class Main
 {
@@ -10,7 +9,7 @@ class Main
       {
         {'o', 'o', 'o', 'o', 'o', 'o'}, 
         {'o', 'o', 'o', 'o', 'o', 'o'}, 
-        {'o', 'o', 'o', 'o', 'o', 'o'}, 
+        {'w', 'w', 'w', 'o', 'w', 'o'}, 
         {'o', 'o', 'o', 'o', 'o', 'o'}, 
         {'o', 'o', 'o', 'o', 'o', 'o'}, 
         {'o', 'o', 'o', 'o', 'o', 'o'}, 
@@ -20,12 +19,12 @@ class Main
 
       Integer[] _unit = {1, 1};
       Integer[] _target1 = {4, 4};
-      Integer[] _target2 = {0, 1};
-      Integer[] _target3 = {2, 1};
-      Integer[] _target4 = {1, 2};
+      Integer[] _target2 = {5, 5};
+      Integer[] _target3 = {5, 6};
+      Integer[] _target4 = {2, 1};
 
       DistanceCalculator testDistanceCalculator = new DistanceCalculator
-      (test, 'c', _unit, _target1, _target2, _target3, _target4);
+      (test, 'i', _unit, _target1, _target2, _target3, _target4);
 
       testDistanceCalculator.labelBoard();
       Node[][] testLabeledBoard = testDistanceCalculator.getLabeledBoard();
@@ -51,6 +50,7 @@ class Main
                 System.out.print(temp.getCurrentDistance() + "          ");
               }
           }
+          System.out.println("");
           System.out.println("");
       }
 

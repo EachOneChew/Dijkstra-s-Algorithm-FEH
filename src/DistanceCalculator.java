@@ -149,11 +149,12 @@ public class DistanceCalculator
 
         // enemies get "special" delay label as -2
         // which means their distance will still be set by solveDistance
-        // however, they cannot be traversed:
-        // they are not added to toVisit in solveDistance
-        findNode(labeledBoard, target1).setDelay(-2);
+        // however, they cannot be traversed: they are not added to toVisit in solveDistance
+        // if not single target, relations of target and unit and functionality as obstacles
+        // will be completely different and addressed by solvePath
         if (!singleTarget)
         {
+            findNode(labeledBoard, target1).setDelay(-2);
             findNode(labeledBoard, target2).setDelay(-2);
             findNode(labeledBoard, target3).setDelay(-2);
             findNode(labeledBoard, target4).setDelay(-2);
@@ -201,9 +202,9 @@ public class DistanceCalculator
                 adjacentNodes.add(rightCoordinates);
             }
 
-            for (Integer[] curCoordinates: adjacentNodes)
+            for (Integer[] coord: adjacentNodes)
             {
-                Node temp = findNode(labeledBoard, curCoordinates);
+                Node temp = findNode(labeledBoard, coord);
                 // if the delay is -2, the node is occupied by an enemy unit
                 // thus, it's distance should still be calculated, BUT
                 // the node should not be considered as being along any path
@@ -217,7 +218,8 @@ public class DistanceCalculator
                 {
                     temp.setCurrentDistance
                     (Math.min(currentNodeDistance + temp.getDelay() + 1, temp.getCurrentDistance()));
-                    toVisit.add(curCoordinates);
+                    toVisit.add(coord);
+                    dedupeArrayList(toVisit);
                 }
             }
             
@@ -246,13 +248,21 @@ public class DistanceCalculator
     {
         DistanceCalculator centeredOnTarget = new DistanceCalculator(board, moveType, _target, unit);
         centeredOnTarget.labelBoard();
+        Node[][] localLabeledBoard = centeredOnTarget.getLabeledBoard();
+        // why am I doing this?
+        findNode(localLabeledBoard, target1).setDelay(-2);
+        findNode(localLabeledBoard, target2).setDelay(-2);
+        findNode(localLabeledBoard, target3).setDelay(-2);
+        findNode(localLabeledBoard, target4).setDelay(-2);
         centeredOnTarget.solveDistance();
+
         ArrayList<Integer[]> closestTilesToTarget = new ArrayList<Integer[]>();
 
         // at this point the board should be marked appropriately with distances
         tracePathsRecursive(centeredOnTarget.getLabeledBoard(), closestTilesToTarget, unit, moveRange);
 
-        return closestTilesToTarget;
+        return dedupeArrayList(closestTilesToTarget);
+        // return closestTilesToTarget;
     }
 
     private void tracePathsRecursive
@@ -266,28 +276,49 @@ public class DistanceCalculator
         {
             ArrayList<Integer[]> candidateNodes = new ArrayList<Integer[]>();
             
+            // although staying in place is an option, we do not consider it in this method
             // go through neighboring nodes
             if (currentNode[1] >= 1)
             {
                 Integer[] upCoordinates = {currentNode[0], currentNode[1] - 1};
-                candidateNodes.add(upCoordinates);
+                Node upNode = findNode(_labeledBoard, upCoordinates);
+                if (upNode.getDelay() >= 0
+                && upNode.getCurrentDistance() < Integer.MAX_VALUE)
+                {
+                    candidateNodes.add(upCoordinates);
+                }
             }
             if (currentNode[1] < _labeledBoard.length - 1)
             {
                 Integer[] downCoordinates = {currentNode[0], currentNode[1] + 1};
-                candidateNodes.add(downCoordinates);
+                Node downNode = findNode(_labeledBoard, downCoordinates);
+                if (downNode.getDelay() >= 0
+                && downNode.getCurrentDistance() < Integer.MAX_VALUE)
+                {
+                    candidateNodes.add(downCoordinates);
+                }
             }
             if (currentNode[0] >= 1)
             {
                 Integer[] leftCoordinates = {currentNode[0] - 1, currentNode[1]};
-                candidateNodes.add(leftCoordinates);
+                Node leftNode = findNode(_labeledBoard, leftCoordinates);
+                if (leftNode.getDelay() >= 0
+                && leftNode.getCurrentDistance() < Integer.MAX_VALUE)
+                {
+                    candidateNodes.add(leftCoordinates);
+                }
             }
             if (currentNode[0] < _labeledBoard[0].length - 1)
             {
                 Integer[] rightCoordinates = {currentNode[0] + 1, currentNode[1]};
-                candidateNodes.add(rightCoordinates);
+                Node rightNode = findNode(_labeledBoard, rightCoordinates);
+                if (rightNode.getDelay() >= 0
+                && rightNode.getCurrentDistance() < Integer.MAX_VALUE)
+                {
+                    candidateNodes.add(rightCoordinates);
+                }
             }
-            
+
             // find the smallest distance value you can reach with one step
             int eligibleThreshold = findMinDistance(_labeledBoard, candidateNodes);
 
@@ -296,8 +327,8 @@ public class DistanceCalculator
             for (int i = 0; i < candidateNodes.size(); i++)
             {
                 Integer[] temp = candidateNodes.get(i);
-                if (findNode(_labeledBoard, temp).getCurrentDistance()
-                <= eligibleThreshold)
+                Node tempNode = findNode(_labeledBoard, temp);
+                if (tempNode.getCurrentDistance() <= eligibleThreshold)
                 {
                     tracePathsRecursive
                     (_labeledBoard, resultCoordinates, temp, stepsLeft - 1);
@@ -344,6 +375,33 @@ public class DistanceCalculator
     private Node findNode(Node[][] _labeledBoard, Integer[] coordinates)
     {
         return _labeledBoard[coordinates[1]][coordinates[0]];
+    }
+
+    // exactly what it sounds like
+    // needs to be like this because the Integer[]s I make aren't the same object
+    private ArrayList<Integer[]> dedupeArrayList(ArrayList<Integer[]> input)
+    {
+        ArrayList<Integer[]> result = new ArrayList<Integer[]>();
+        ArrayList<Integer[]> alreadyAppeared = new ArrayList<Integer[]>();
+
+        for (Integer[] coord: input)
+        {
+            boolean present = false;
+            for (Integer[] compareCoord: alreadyAppeared)
+            {
+                if (coord[0] == compareCoord[0] && coord[1] == compareCoord[1])
+                {
+                    present = true;
+                }
+            }
+            if (!present)
+            {
+                result.add(coord);
+                alreadyAppeared.add(coord);
+            }
+        }
+
+        return result;
     }
     
     // getter methods
