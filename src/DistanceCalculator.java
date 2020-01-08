@@ -209,8 +209,10 @@ public class DistanceCalculator
                 {
                     temp.setCurrentDistance
                     (Math.min(currentNodeDistance + temp.getDelay() + 1, temp.getCurrentDistance()));
+                    // BUG https://github.com/EachOneChew/Dijkstra-s-Algorithm-FEH/issues/16
                     toVisit.add(coord);
-                    dedupeArrayList(toVisit);
+                    dedupeArrayList(toVisit); // TODO if coord is already in toVisit, we may need to update
+                                              // its currentDistance if we can get it smaller with currentNodeDistance 
                 }
             }
             
