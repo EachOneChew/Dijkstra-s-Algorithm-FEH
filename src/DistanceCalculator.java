@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 // EXTREMELY IMPORTANT NOTE:
 // assuming a 2d array is looked at as a cartesian plane
@@ -35,6 +36,18 @@ public class DistanceCalculator
         {0,  0,  0,  0, -1,  0} 
     };
 
+    private int getMoveRangeFromMoveType(char moveType) {
+        if (moveType == 'c') {
+            return 3;
+        }
+        else if (moveType == 'i' || moveType == 'f') {
+            return 2;
+        }
+        else {
+            return 1;
+        }
+    }
+
     public DistanceCalculator
     (char[][] _board, char _moveType,
     Integer[] _unit, Integer[] _target1, Integer[] _target2, Integer[] _target3, Integer[] _target4)
@@ -48,18 +61,7 @@ public class DistanceCalculator
         target3 = _target3;
         target4 = _target4;
         singleTarget = false;
-        if (_moveType == 'c')
-        {
-            moveRange = 3;
-        }
-        else if (_moveType == 'i' || _moveType == 'f')
-        {
-            moveRange = 2;
-        }
-        else
-        {
-            moveRange = 1;
-        }
+        moveRange = getMoveRangeFromMoveType(_moveType);
     }
 
     // for just distance from a to b
@@ -73,18 +75,7 @@ public class DistanceCalculator
         unit = _unit;
         target1 = _target1;
         singleTarget = true;
-        if (_moveType == 'c')
-        {
-            moveRange = 3;
-        }
-        else if (_moveType == 'i' || _moveType == 'f')
-        {
-            moveRange = 2;
-        }
-        else
-        {
-            moveRange = 1;
-        }
+        moveRange = getMoveRangeFromMoveType(_moveType);
     }
 
     // convert a char[][] board "game field" of FEH into a labeledBoard
@@ -382,28 +373,37 @@ public class DistanceCalculator
     private ArrayList<Integer[]> dedupeArrayList(ArrayList<Integer[]> input)
     {
         ArrayList<Integer[]> result = new ArrayList<Integer[]>();
-        ArrayList<Integer[]> alreadyAppeared = new ArrayList<Integer[]>();
+        // ArrayList<Integer[]> alreadyAppeared = new ArrayList<Integer[]>();
 
-        for (Integer[] coord: input)
-        {
-            boolean present = false;
-            for (Integer[] compareCoord: alreadyAppeared)
-            {
-                if (coord[0] == compareCoord[0] && coord[1] == compareCoord[1])
-                {
-                    present = true;
-                }
-            }
-            if (!present)
-            {
+        // for (Integer[] coord: input)
+        // {
+        //     boolean present = false;
+        //     for (Integer[] compareCoord: alreadyAppeared)
+        //     {
+        //         if (coord[0] == compareCoord[0] && coord[1] == compareCoord[1])
+        //         {
+        //             present = true;
+        //         }
+        //     }
+        //     if (!present)
+        //     {
+        //         result.add(coord);
+        //         alreadyAppeared.add(coord);
+        //     }
+        // }
+
+        HashSet<String> alreadyAppeared = new HashSet<String>();
+        for (Integer[] coord: input) {
+            String hashcode = coord[0].toString() + "," + coord[1].toString();
+            if (!alreadyAppeared.contains(hashcode)) {
                 result.add(coord);
-                alreadyAppeared.add(coord);
+                alreadyAppeared.add(hashcode);
             }
         }
 
         return result;
     }
-    
+
     // getter methods
     public Node[][] getLabeledBoard()
     {
