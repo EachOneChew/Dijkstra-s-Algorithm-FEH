@@ -36,6 +36,18 @@ public class DistanceCalculator
         {0,  0,  0,  0, -1,  0} 
     };
 
+    private int getMoveRangeFromMoveType(char moveType) {
+        if (moveType == 'c') {
+            return 3;
+        }
+        else if (moveType == 'i' || moveType == 'f') {
+            return 2;
+        }
+        else {
+            return 1;
+        }
+    }
+
     public DistanceCalculator
     (char[][] _board, char _moveType,
     Integer[] _unit, Integer[] _target1, Integer[] _target2, Integer[] _target3, Integer[] _target4)
@@ -49,18 +61,7 @@ public class DistanceCalculator
         target3 = _target3;
         target4 = _target4;
         singleTarget = false;
-        if (_moveType == 'c')
-        {
-            moveRange = 3;
-        }
-        else if (_moveType == 'i' || _moveType == 'f')
-        {
-            moveRange = 2;
-        }
-        else
-        {
-            moveRange = 1;
-        }
+        moveRange = getMoveRangeFromMoveType(_moveType);
     }
 
     // for just distance from a to b
@@ -74,18 +75,7 @@ public class DistanceCalculator
         unit = _unit;
         target1 = _target1;
         singleTarget = true;
-        if (_moveType == 'c')
-        {
-            moveRange = 3;
-        }
-        else if (_moveType == 'i' || _moveType == 'f')
-        {
-            moveRange = 2;
-        }
-        else
-        {
-            moveRange = 1;
-        }
+        moveRange = getMoveRangeFromMoveType(_moveType);
     }
 
     // convert a char[][] board "game field" of FEH into a labeledBoard
