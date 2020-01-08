@@ -1,1 +1,4 @@
+# build folder. never check in
 build/*
+# OSX
+.DS_Store
