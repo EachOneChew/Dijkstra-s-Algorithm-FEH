@@ -163,7 +163,8 @@ public class DistanceCalculator
         
         // now start the algorithm's loop
         // might as well do the whole board
-        while (true)
+        // while (true)
+        do
         // (!(findNode(labeledBoard, target1).getIsTraversed()
         // && findNode(labeledBoard, target2).getIsTraversed()
         // && findNode(labeledBoard, target3).getIsTraversed()
@@ -222,11 +223,11 @@ public class DistanceCalculator
             // moving onto the next node to visit - update currentCoordinates
             currentCoordinates = findMinDistanceNode(labeledBoard, toVisit);
             
-            if (toVisit.isEmpty())
-            {
-                break;
-            }
-        }
+            // if (toVisit.isEmpty())
+            // {
+            //     break;
+            // }
+        } while (!toVisit.isEmpty());
     }
 
     // when done this should be multipurpose, for both enemy and assist target selection
@@ -356,16 +357,17 @@ public class DistanceCalculator
     // returns the minimum distance value of the nodes in the ArrayList
     private int findMinDistance(Node[][] _labeledBoard, ArrayList<Integer[]> input)
     {
-        int curMininum = Integer.MAX_VALUE;
-        for (int i = 0; i < input.size(); i++)
-        {
-            int temp = findNode(_labeledBoard, input.get(i)).getCurrentDistance();
-            if (temp < curMininum)
-            {
-                curMininum = temp;
-            }            
-        }
-        return curMininum;
+        // int curMininum = Integer.MAX_VALUE;
+        // for (int i = 0; i < input.size(); i++)
+        // {
+        //     int temp = findNode(_labeledBoard, input.get(i)).getCurrentDistance();
+        //     if (temp < curMininum)
+        //     {
+        //         curMininum = temp;
+        //     }            
+        // }
+        // return curMininum;
+        return findNode(_labeledBoard, findMinDistanceNode(_labeledBoard, input)).getCurrentDistance();
     }
     
     // takes int[] coordinates and finds the corresponding node in labeledBoard
