@@ -7,7 +7,7 @@ public class Main
       // testing stuff
       char[][] test =
       {
-        {'o', 'o', 'o', 'o', 'o', 'o'}, 
+        {'o', 'o', 'w', 'o', 'o', 'o'}, 
         {'o', 'o', 'o', 'o', 'o', 'o'}, 
         {'w', 'w', 'w', 'o', 'w', 'o'}, 
         {'o', 'o', 'o', 'o', 'o', 'o'}, 
