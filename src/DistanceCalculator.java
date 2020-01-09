@@ -163,12 +163,12 @@ public class DistanceCalculator
         
         // now start the algorithm's loop
         // might as well do the whole board
-        // while (true)
-        do
+        // while
         // (!(findNode(labeledBoard, target1).getIsTraversed()
         // && findNode(labeledBoard, target2).getIsTraversed()
         // && findNode(labeledBoard, target3).getIsTraversed()
         // && findNode(labeledBoard, target4).getIsTraversed()))
+        do
         {
             int currentNodeDistance = findNode(labeledBoard, currentCoordinates).getCurrentDistance();
 
@@ -227,7 +227,8 @@ public class DistanceCalculator
             // {
             //     break;
             // }
-        } while (!toVisit.isEmpty());
+        }
+        while (!toVisit.isEmpty());
     }
 
     // when done this should be multipurpose, for both enemy and assist target selection
