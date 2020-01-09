@@ -1,8 +1,39 @@
 [![Build Status](https://travis-ci.org/EachOneChew/Dijkstra-s-Algorithm-FEH.svg?branch=master)](https://travis-ci.org/EachOneChew/Dijkstra-s-Algorithm-FEH)
 
-# What is this repo about
+# How to build
 
-# Who may be interested in this repo
+After checking out the repo, run `./build.sh`. Folder `build` would contain compiled Java classes. The build process includes style checking of code, compilation, and running `Main` class as a test.
+
+We choose `ant` as the build system, which is shipped in the repo's folder `vendor/apache-ant-1.10.7`.
+
+You can also test your code by running:
+```
+vendor/apache-ant-1.10.7/bin/ant test
+```
+
+Likely you will see output below:
+```
+zqiu02vl:Dijkstra-s-Algorithm zqiu$ vendor/apache-ant-1.10.7/bin/ant test
+Buildfile: /Users/zqiu/temp/Dijkstra-s-Algorithm/build.xml
+
+init:
+
+checkstyle:
+[checkstyle] Running Checkstyle 8.28 on 3 files
+
+compile:
+
+test:
+     [java] 1          2          3          6          2147483647
+     [java] 0          1          2147483647 7          2147483647
+     [java] 1          2          5          6          2147483647
+     [java] 2          3          4          2147483647 2147483647
+     [java] 3          2147483647 2147483647 2147483647 2147483647
+     [java] 4          5          2147483647 2147483647 2147483647
+
+BUILD SUCCESSFUL
+Total time: 1 second
+```
 
 # How to Use DistanceCalculator
 

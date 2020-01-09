@@ -1,4 +1,5 @@
 # build folder. never check in
 build/*
+checkstyle_report.xml
 # OSX
 .DS_Store
