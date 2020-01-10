@@ -105,3 +105,7 @@ Once everything is done, "clearFields" should be called to clear all fields of a
 # Example
 
 See file `test/Main.java` for more details.
+
+To build the example file: `./build.sh`. You will find its class file in folder `test-build`.
+
+To run the example: `java -classpath build:test-build Main`. You will see the output in console.
