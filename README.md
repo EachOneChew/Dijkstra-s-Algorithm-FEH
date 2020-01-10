@@ -2,7 +2,7 @@
 
 # How to build
 
-After checking out the repo, run `./build.sh`. Folder `build` would contain compiled Java classes. The build process includes style checking of code, compilation, and running `Main` class as a test.
+After checking out the repo, run `./build.sh`. Folder `build` would contain compiled Java classes. The build process includes style checking of code, compilation on both source files and test files, and running `Main` class as a test in a separate folder `test-build`.
 
 We choose `ant` as the build system, which is shipped in the repo's folder `vendor/apache-ant-1.10.7`.
 
@@ -17,22 +17,43 @@ zqiu02vl:Dijkstra-s-Algorithm zqiu$ vendor/apache-ant-1.10.7/bin/ant test
 Buildfile: /Users/zqiu/temp/Dijkstra-s-Algorithm/build.xml
 
 init:
+    [mkdir] Created dir: /Users/zqiu/temp/Dijkstra-s-Algorithm/build
+    [mkdir] Created dir: /Users/zqiu/temp/Dijkstra-s-Algorithm/test-build
 
 checkstyle:
-[checkstyle] Running Checkstyle 8.28 on 3 files
+[checkstyle] Running Checkstyle 8.28 on 2 files
 
 compile:
+    [javac] Compiling 2 source files to /Users/zqiu/temp/Dijkstra-s-Algorithm/build
+
+test-compile:
+    [javac] Compiling 1 source file to /Users/zqiu/temp/Dijkstra-s-Algorithm/test-build
 
 test:
-     [java] 1          2          3          6          2147483647
-     [java] 0          1          2147483647 7          2147483647
-     [java] 1          2          5          6          2147483647
-     [java] 2          3          4          2147483647 2147483647
-     [java] 3          2147483647 2147483647 2147483647 2147483647
-     [java] 4          5          2147483647 2147483647 2147483647
+     [java] 2          1          2147483647 2147483647 2147483647 2147483647
+     [java]
+     [java] 1          0          1          2147483647 2147483647 2147483647
+     [java]
+     [java] 2147483647 2147483647 2147483647 2147483647 2147483647 2147483647
+     [java]
+     [java] 2147483647 2147483647 2147483647 2147483647 2147483647 2147483647
+     [java]
+     [java] 2147483647 2147483647 2147483647 2147483647 2147483647 2147483647
+     [java]
+     [java] 2147483647 2147483647 2147483647 2147483647 2147483647 2147483647
+     [java]
+     [java] 2147483647 2147483647 2147483647 2147483647 2147483647 2147483647
+     [java]
+     [java] 2147483647 2147483647 2147483647 2147483647 2147483647 2147483647
+     [java]
 
 BUILD SUCCESSFUL
-Total time: 1 second
+Total time: 2 seconds
+```
+
+If you want to clean up your build, run command below:
+```
+vendor/apache-ant-1.10.7/bin/ant clean
 ```
 
 # How to Use DistanceCalculator
@@ -81,8 +102,6 @@ Note that the way solvePath works means that it can solve for the shortest path 
 
 Once everything is done, "clearFields" should be called to clear all fields of a DistanceCalculator. Alternatively, a new DistanceCalculator can be created and the current one discarded.
 
-# TODO
+# Example
 
-   - [ ] create basic unit tests
-   - [x] set up build script
-   - [x] hook up to CI (travis or circleci)
+See file `test/Main.java` for more details.
