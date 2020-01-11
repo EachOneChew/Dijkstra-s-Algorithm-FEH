@@ -163,11 +163,6 @@ public class DistanceCalculator
         
         // now start the algorithm's loop
         // might as well do the whole board
-        // while
-        // (!(findNode(labeledBoard, target1).getIsTraversed()
-        // && findNode(labeledBoard, target2).getIsTraversed()
-        // && findNode(labeledBoard, target3).getIsTraversed()
-        // && findNode(labeledBoard, target4).getIsTraversed()))
         do
         {
             int currentNodeDistance = findNode(labeledBoard, currentCoordinates).getCurrentDistance();
@@ -210,10 +205,8 @@ public class DistanceCalculator
                 {
                     temp.setCurrentDistance
                     (Math.min(currentNodeDistance + temp.getDelay() + 1, temp.getCurrentDistance()));
-                    // BUG https://github.com/EachOneChew/Dijkstra-s-Algorithm-FEH/issues/16
                     toVisit.add(coord);
-                    dedupeArrayList(toVisit); // TODO if coord is already in toVisit, we may need to update
-                                              // its currentDistance if we can get it smaller with currentNodeDistance 
+                    dedupeArrayList(toVisit);
                 }
             }
             
@@ -222,11 +215,6 @@ public class DistanceCalculator
             findNode(labeledBoard, currentCoordinates).setIsTraversed(true);
             // moving onto the next node to visit - update currentCoordinates
             currentCoordinates = findMinDistanceNode(labeledBoard, toVisit);
-            
-            // if (toVisit.isEmpty())
-            // {
-            //     break;
-            // }
         }
         while (!toVisit.isEmpty());
     }
@@ -257,7 +245,6 @@ public class DistanceCalculator
         tracePathsRecursive(centeredOnTarget.getLabeledBoard(), closestTilesToTarget, unit, moveRange);
 
         return dedupeArrayList(closestTilesToTarget);
-        // return closestTilesToTarget;
     }
 
     private void tracePathsRecursive
@@ -381,24 +368,6 @@ public class DistanceCalculator
     private ArrayList<Integer[]> dedupeArrayList(ArrayList<Integer[]> input)
     {
         ArrayList<Integer[]> result = new ArrayList<Integer[]>();
-        // ArrayList<Integer[]> alreadyAppeared = new ArrayList<Integer[]>();
-
-        // for (Integer[] coord: input)
-        // {
-        //     boolean present = false;
-        //     for (Integer[] compareCoord: alreadyAppeared)
-        //     {
-        //         if (coord[0] == compareCoord[0] && coord[1] == compareCoord[1])
-        //         {
-        //             present = true;
-        //         }
-        //     }
-        //     if (!present)
-        //     {
-        //         result.add(coord);
-        //         alreadyAppeared.add(coord);
-        //     }
-        // }
 
         HashSet<String> alreadyAppeared = new HashSet<String>();
         for (Integer[] coord: input) {
