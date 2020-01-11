@@ -327,9 +327,14 @@ public class DistanceCalculator
     // returns coordinates of the node with smallest distance value
     private Integer[] findMinDistanceNode(Node[][] _labeledBoard, ArrayList<Integer[]> input)
     {
-        int curMininum = Integer.MAX_VALUE;
-        Integer[] curMinimumCoordinates = new Integer[2];
-        for (int i = 0; i < input.size(); i++)
+        if (input.size() == 0) {
+            // Do we need to handle this case?
+            return null;
+        }
+        
+        Integer[] curMinimumCoordinates = input.get(0);
+        int curMininum = findNode(_labeledBoard, curMinimumCoordinates).getCurrentDistance();
+        for (int i = 1; i < input.size(); i++)
         {
             int temp = findNode(_labeledBoard, input.get(i)).getCurrentDistance();
             if (temp < curMininum)
@@ -345,16 +350,11 @@ public class DistanceCalculator
     // returns the minimum distance value of the nodes in the ArrayList
     private int findMinDistance(Node[][] _labeledBoard, ArrayList<Integer[]> input)
     {
-        int curMininum = Integer.MAX_VALUE;
-        for (int i = 0; i < input.size(); i++)
-        {
-            int temp = findNode(_labeledBoard, input.get(i)).getCurrentDistance();
-            if (temp < curMininum)
-            {
-                curMininum = temp;
-            }            
+        Integer[] minDistanceNode = findMinDistanceNode(_labeledBoard, input);
+        if (minDistanceNode == null) { // or you can check if input is empty
+            return Integer.MAX_VALUE;
         }
-        return curMininum;
+        return findNode(_labeledBoard, minDistanceNode).getCurrentDistance();
     }
     
     // takes int[] coordinates and finds the corresponding node in labeledBoard
