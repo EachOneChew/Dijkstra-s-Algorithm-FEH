@@ -102,6 +102,12 @@ Note that the way solvePath works means that it can solve for the shortest path 
 
 Once everything is done, "clearFields" should be called to clear all fields of a DistanceCalculator. Alternatively, a new DistanceCalculator can be created and the current one discarded.
 
+# How to release
+
+Before you tag a point, check it out to your local repo and run `./build.sh`. You will find the release file `dist/distance-calculator.jar` for attaching to your release as binary.
+
+Tag your point and follow the normal release process in Github to cut a new release.
+
 # Example
 
 See file `test/Main.java` for more details.
