@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/EachOneChew/Dijkstra-s-Algorithm-FEH.svg?branch=master)](https://travis-ci.org/EachOneChew/Dijkstra-s-Algorithm-FEH)
-
+[![Build Status](https://travis-ci.com/EachOneChew/Dijkstra-s-Algorithm-FEH.svg?branch=master)](https://travis-ci.com/EachOneChew/Dijkstra-s-Algorithm-FEH)
 # How to Build
 
 After checking out the repo, run `./build.sh`. Folder `build` would contain compiled Java classes. The build process includes style checking of code, compilation on both source files and test files, and running `Main` class as a test in a separate folder `test-build`.
