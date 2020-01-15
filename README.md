@@ -1,17 +1,19 @@
 [![Build Status](https://travis-ci.org/EachOneChew/Dijkstra-s-Algorithm-FEH.svg?branch=master)](https://travis-ci.org/EachOneChew/Dijkstra-s-Algorithm-FEH)
 
-# How to build
+# How to Build
 
 After checking out the repo, run `./build.sh`. Folder `build` would contain compiled Java classes. The build process includes style checking of code, compilation on both source files and test files, and running `Main` class as a test in a separate folder `test-build`.
 
 We choose `ant` as the build system, which is shipped in the repo's folder `vendor/apache-ant-1.10.7`.
 
 You can also test your code by running:
+
 ```
 vendor/apache-ant-1.10.7/bin/ant test
 ```
 
 Likely you will see output below:
+
 ```
 zqiu02vl:Dijkstra-s-Algorithm zqiu$ vendor/apache-ant-1.10.7/bin/ant test
 Buildfile: /Users/zqiu/temp/Dijkstra-s-Algorithm/build.xml
@@ -52,6 +54,7 @@ Total time: 2 seconds
 ```
 
 If you want to clean up your build, run command below:
+
 ```
 vendor/apache-ant-1.10.7/bin/ant clean
 ```
