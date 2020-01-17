@@ -1,5 +1,6 @@
 # build folder. never check in
 build/*
+build-debug/*
 test-build/*
 test-report/*
 dist/*

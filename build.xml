@@ -6,6 +6,7 @@
     <property name="src" location="src"/>
     <property name="test-src" location="test"/>
     <property name="build" location="build"/>
+    <property name="build-debug" location="build-debug"/>
     <property name="dist" location="dist"/>
     <property name="test-build" location="test-build"/>
     <property name="test-report" location="test-report"/>
@@ -18,6 +19,7 @@
     <target name="init">
         <tstamp/>
         <mkdir dir="${build}"/>
+        <mkdir dir="${build-debug}"/>
         <mkdir dir="${test-build}"/>
         <mkdir dir="${test-report}"/>
         <mkdir dir="${dist}"/>
@@ -31,7 +33,10 @@
     <target name="compile" depends="checkstyle">
         <javac srcdir="${src}" destdir="${build}" includeantruntime="false"/>
     </target>
-    <target name="test-compile" depends="compile">
+    <target name="compile-debug" depends="compile">
+        <javac srcdir="${src}" destdir="${build-debug}" debug="true" includeantruntime="false"/>
+    </target>
+    <target name="test-compile" depends="compile-debug">
         <javac srcdir="${test-src}" destdir="${test-build}" classpath="${build}" includeantruntime="false">
             <classpath>
                 <pathelement path="${build}"/>
@@ -55,7 +60,7 @@
                     <pathelement location="vendor/junit-4.13.jar"/>
                     <pathelement location="vendor/hamcrest-core-1.3.jar"/>
                     <pathelement path="${test-build}"/>
-                    <pathelement path="${build}"/>
+                    <pathelement path="${build-debug}"/>
                 </classpath>
                 <formatter type="plain"/>
                 <test name="TestCase" haltonfailure="no" outfile="test-report/result">
@@ -77,13 +82,22 @@
                 </sourcefiles>
             </structure>
 
+            <!-- <check>
+                <rule element="METHOD">
+                    <limit counter="LINE" value="COVEREDRATIO" minimum="60%"/>
+                    <limit counter="CLASS" value="MISSEDCOUNT" maximum="0"/>
+                </rule>
+            </check>             -->
+
             <html destdir="test-report/report" />
             <xml destfile="test-report/report/report.xml" />
+
         </jacoco:report>        
         <jar destfile="${dist}/distance-calculator.jar" basedir="${build}"/>
     </target>
     <target name="clean" description="clean up">
         <delete dir="build"/>
+        <delete dir="build-debug"/>
         <delete dir="test-build"/>
         <delete dir="test-report"/>
         <delete dir="dist"/>
