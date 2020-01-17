@@ -1,4 +1,7 @@
 [![Build Status](https://travis-ci.com/EachOneChew/Dijkstra-s-Algorithm-FEH.svg?branch=master)](https://travis-ci.com/EachOneChew/Dijkstra-s-Algorithm-FEH)
+![GitHub](https://img.shields.io/github/license/EachOneChew/Dijkstra-s-Algorithm-FEH)
+![GitHub contributors](https://img.shields.io/github/contributors/EachOneChew/Dijkstra-s-Algorithm-FEH)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/EachOneChew/Dijkstra-s-Algorithm-FEH?include_prereleases)
 # How to Build
 
 After checking out the repo, run `./build.sh`. Folder `build` would contain compiled Java classes. The build process includes style checking of code, compilation on both source files and test files, and running `Main` class as a test in a separate folder `test-build`.
