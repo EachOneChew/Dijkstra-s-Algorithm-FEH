@@ -19,6 +19,7 @@
         <tstamp/>
         <mkdir dir="${build}"/>
         <mkdir dir="${test-build}"/>
+        <mkdir dir="${test-report}"/>
         <mkdir dir="${dist}"/>
     </target>
     <target name="checkstyle" depends="init">
