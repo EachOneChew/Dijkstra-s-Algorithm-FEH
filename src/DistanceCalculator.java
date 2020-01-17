@@ -163,11 +163,7 @@ public class DistanceCalculator
         
         // now start the algorithm's loop
         // might as well do the whole board
-        while (true)
-        // (!(findNode(labeledBoard, target1).getIsTraversed()
-        // && findNode(labeledBoard, target2).getIsTraversed()
-        // && findNode(labeledBoard, target3).getIsTraversed()
-        // && findNode(labeledBoard, target4).getIsTraversed()))
+        do
         {
             int currentNodeDistance = findNode(labeledBoard, currentCoordinates).getCurrentDistance();
 
@@ -209,10 +205,8 @@ public class DistanceCalculator
                 {
                     temp.setCurrentDistance
                     (Math.min(currentNodeDistance + temp.getDelay() + 1, temp.getCurrentDistance()));
-                    // BUG https://github.com/EachOneChew/Dijkstra-s-Algorithm-FEH/issues/16
                     toVisit.add(coord);
-                    dedupeArrayList(toVisit); // TODO if coord is already in toVisit, we may need to update
-                                              // its currentDistance if we can get it smaller with currentNodeDistance 
+                    dedupeArrayList(toVisit);
                 }
             }
             
@@ -221,12 +215,8 @@ public class DistanceCalculator
             findNode(labeledBoard, currentCoordinates).setIsTraversed(true);
             // moving onto the next node to visit - update currentCoordinates
             currentCoordinates = findMinDistanceNode(labeledBoard, toVisit);
-            
-            if (toVisit.isEmpty())
-            {
-                break;
-            }
         }
+        while (!toVisit.isEmpty());
     }
 
     // when done this should be multipurpose, for both enemy and assist target selection
@@ -255,7 +245,6 @@ public class DistanceCalculator
         tracePathsRecursive(centeredOnTarget.getLabeledBoard(), closestTilesToTarget, unit, moveRange);
 
         return dedupeArrayList(closestTilesToTarget);
-        // return closestTilesToTarget;
     }
 
     private void tracePathsRecursive
@@ -268,7 +257,7 @@ public class DistanceCalculator
         else
         {
             ArrayList<Integer[]> candidateNodes = new ArrayList<Integer[]>();
-            
+
             // although staying in place is an option, we do not consider it in this method
             // also, in order for a node on a path to be eligible, it cannot be:
             // a) a wall
@@ -338,9 +327,14 @@ public class DistanceCalculator
     // returns coordinates of the node with smallest distance value
     private Integer[] findMinDistanceNode(Node[][] _labeledBoard, ArrayList<Integer[]> input)
     {
-        int curMininum = Integer.MAX_VALUE;
-        Integer[] curMinimumCoordinates = new Integer[2];
-        for (int i = 0; i < input.size(); i++)
+        if (input.size() == 0) {
+            // Do we need to handle this case?
+            return null;
+        }
+        
+        Integer[] curMinimumCoordinates = input.get(0);
+        int curMininum = findNode(_labeledBoard, curMinimumCoordinates).getCurrentDistance();
+        for (int i = 1; i < input.size(); i++)
         {
             int temp = findNode(_labeledBoard, input.get(i)).getCurrentDistance();
             if (temp < curMininum)
@@ -356,16 +350,11 @@ public class DistanceCalculator
     // returns the minimum distance value of the nodes in the ArrayList
     private int findMinDistance(Node[][] _labeledBoard, ArrayList<Integer[]> input)
     {
-        int curMininum = Integer.MAX_VALUE;
-        for (int i = 0; i < input.size(); i++)
-        {
-            int temp = findNode(_labeledBoard, input.get(i)).getCurrentDistance();
-            if (temp < curMininum)
-            {
-                curMininum = temp;
-            }            
+        Integer[] minDistanceNode = findMinDistanceNode(_labeledBoard, input);
+        if (minDistanceNode == null) { // or you can check if input is empty
+            return Integer.MAX_VALUE;
         }
-        return curMininum;
+        return findNode(_labeledBoard, minDistanceNode).getCurrentDistance();
     }
     
     // takes int[] coordinates and finds the corresponding node in labeledBoard
@@ -379,24 +368,6 @@ public class DistanceCalculator
     private ArrayList<Integer[]> dedupeArrayList(ArrayList<Integer[]> input)
     {
         ArrayList<Integer[]> result = new ArrayList<Integer[]>();
-        // ArrayList<Integer[]> alreadyAppeared = new ArrayList<Integer[]>();
-
-        // for (Integer[] coord: input)
-        // {
-        //     boolean present = false;
-        //     for (Integer[] compareCoord: alreadyAppeared)
-        //     {
-        //         if (coord[0] == compareCoord[0] && coord[1] == compareCoord[1])
-        //         {
-        //             present = true;
-        //         }
-        //     }
-        //     if (!present)
-        //     {
-        //         result.add(coord);
-        //         alreadyAppeared.add(coord);
-        //     }
-        // }
 
         HashSet<String> alreadyAppeared = new HashSet<String>();
         for (Integer[] coord: input) {

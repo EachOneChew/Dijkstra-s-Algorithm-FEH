@@ -2,16 +2,45 @@
     <description>
         Minimal build file for PathCalculator
     </description>
+
     <property name="src" location="src"/>
+    <property name="test-src" location="test"/>
     <property name="build" location="build"/>
+    <property name="dist" location="dist"/>
+    <property name="test-build" location="test-build"/>
+    <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
+        classpath="./vendor/checkstyle-8.28-all.jar"/>
+
     <target name="init">
         <tstamp/>
         <mkdir dir="${build}"/>
+        <mkdir dir="${test-build}"/>
+        <mkdir dir="${dist}"/>
     </target>
-    <target name="compile" depends="init">
+    <target name="checkstyle" depends="init">
+        <checkstyle config="google_checks.xml">
+            <formatter type="xml" tofile="checkstyle_report.xml"/>
+            <fileset dir="src" includes="**/*.java"/>
+        </checkstyle>
+    </target>
+    <target name="compile" depends="checkstyle">
         <javac srcdir="${src}" destdir="${build}" includeantruntime="false"/>
     </target>
-    <!-- <target name="test" depends="compile">
-        <java Main/>
-    </target> -->
+    <target name="test-compile" depends="compile">
+        <javac srcdir="${test-src}" destdir="${test-build}" classpath="${build}" includeantruntime="false"/>
+    </target>
+    <target name="test" depends="test-compile">
+        <java classname="Main">
+            <classpath>
+                <pathelement path="${test-build}"/>
+                <pathelement path="${build}"/>
+            </classpath>
+        </java>
+        <jar destfile="${dist}/distance-calculator.jar" basedir="${build}"/>
+    </target>
+    <target name="clean" description="clean up">
+        <delete dir="build"/>
+        <delete dir="test-build"/>
+        <delete dir="dist"/>
+    </target>
 </project>

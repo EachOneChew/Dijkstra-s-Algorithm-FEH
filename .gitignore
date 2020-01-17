@@ -1,4 +1,9 @@
 # build folder. never check in
 build/*
+test-build/*
+dist/*
+checkstyle_report.xml
 # OSX
 .DS_Store
+# VSCode
+.vscode/
