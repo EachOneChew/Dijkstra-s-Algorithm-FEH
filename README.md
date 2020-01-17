@@ -56,6 +56,8 @@ BUILD SUCCESSFUL
 Total time: 2 seconds
 ```
 
+You can find code coverage report in folder `test-report/report/index.html`.
+
 If you want to clean up your build, run command below:
 
 ```
