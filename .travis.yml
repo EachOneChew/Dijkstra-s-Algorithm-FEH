@@ -8,5 +8,4 @@ language: java
 script:
   - ./build.sh
 after_success:
-  - echo $CODECOV_TOKEN
   - bash <(curl -s https://codecov.io/bash)  

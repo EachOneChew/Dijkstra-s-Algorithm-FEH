@@ -78,6 +78,7 @@
             </structure>
 
             <html destdir="test-report/report" />
+            <xml destfile="test-report/report/report.xml" />
         </jacoco:report>        
         <jar destfile="${dist}/distance-calculator.jar" basedir="${build}"/>
     </target>
