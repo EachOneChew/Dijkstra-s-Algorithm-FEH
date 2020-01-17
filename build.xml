@@ -27,15 +27,33 @@
         <javac srcdir="${src}" destdir="${build}" includeantruntime="false"/>
     </target>
     <target name="test-compile" depends="compile">
-        <javac srcdir="${test-src}" destdir="${test-build}" classpath="${build}" includeantruntime="false"/>
+        <javac srcdir="${test-src}" destdir="${test-build}" classpath="${build}" includeantruntime="false">
+            <classpath>
+                <pathelement path="${build}"/>
+                <pathelement location="vendor/junit-4.13.jar"/>
+            </classpath>
+        </javac>
     </target>
     <target name="test" depends="test-compile">
-        <java classname="Main">
+        <!-- <java classname="Main">
             <classpath>
                 <pathelement path="${test-build}"/>
                 <pathelement path="${build}"/>
+                <pathelement location="vendor/junit-4.13.jar"/>
             </classpath>
-        </java>
+        </java> -->
+        <junit printsummary="yes" fork="yes" haltonfailure="yes">
+            <classpath>
+                <pathelement location="vendor/junit-4.13.jar"/>
+                <pathelement location="vendor/hamcrest-core-1.3.jar"/>
+                <pathelement path="${test-build}"/>
+                <pathelement path="${build}"/>
+            </classpath>
+            <formatter type="plain"/>
+            <test name="TestCase" haltonfailure="no" outfile="test-report/result">
+                <!-- <formatter type="xml"/> -->
+            </test>            
+        </junit>
         <jar destfile="${dist}/distance-calculator.jar" basedir="${build}"/>
     </target>
     <target name="clean" description="clean up">

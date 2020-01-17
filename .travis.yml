@@ -1,3 +1,6 @@
+env:
+  global:
+    - CODECOV_TOKEN=ecc9ac7e-81ca-41b6-9aa3-5e815ef14738
 os:
   - linux
   - osx
