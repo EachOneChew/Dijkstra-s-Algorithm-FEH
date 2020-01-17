@@ -8,3 +8,5 @@ checkstyle_report.xml
 .DS_Store
 # VSCode
 .vscode/
+#Jacoco
+test/jacoco.exec
