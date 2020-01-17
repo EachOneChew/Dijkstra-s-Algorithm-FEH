@@ -1,9 +1,13 @@
 # build folder. never check in
 build/*
+build-debug/*
 test-build/*
+test-report/*
 dist/*
 checkstyle_report.xml
 # OSX
 .DS_Store
 # VSCode
 .vscode/
+#Jacoco
+test/jacoco.exec

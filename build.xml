@@ -6,15 +6,22 @@
     <property name="src" location="src"/>
     <property name="test-src" location="test"/>
     <property name="build" location="build"/>
+    <property name="build-debug" location="build-debug"/>
     <property name="dist" location="dist"/>
     <property name="test-build" location="test-build"/>
+    <property name="test-report" location="test-report"/>
+    
     <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
         classpath="./vendor/checkstyle-8.28-all.jar"/>
-
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath path="vendor/jacoco-0.8.5/lib/jacocoant.jar"/>
+    </taskdef>
     <target name="init">
         <tstamp/>
         <mkdir dir="${build}"/>
+        <mkdir dir="${build-debug}"/>
         <mkdir dir="${test-build}"/>
+        <mkdir dir="${test-report}"/>
         <mkdir dir="${dist}"/>
     </target>
     <target name="checkstyle" depends="init">
@@ -26,21 +33,74 @@
     <target name="compile" depends="checkstyle">
         <javac srcdir="${src}" destdir="${build}" includeantruntime="false"/>
     </target>
-    <target name="test-compile" depends="compile">
-        <javac srcdir="${test-src}" destdir="${test-build}" classpath="${build}" includeantruntime="false"/>
+    <target name="compile-debug" depends="compile">
+        <javac srcdir="${src}" destdir="${build-debug}" debug="true" includeantruntime="false"/>
+    </target>
+    <target name="test-compile" depends="compile-debug">
+        <javac srcdir="${test-src}" destdir="${test-build}" classpath="${build}" includeantruntime="false">
+            <classpath>
+                <pathelement path="${build}"/>
+                <pathelement location="vendor/junit-4.13.jar"/>
+            </classpath>
+        </javac>
     </target>
     <target name="test" depends="test-compile">
+        <!-- A simple main test -->
         <java classname="Main">
             <classpath>
                 <pathelement path="${test-build}"/>
                 <pathelement path="${build}"/>
+                <pathelement location="vendor/junit-4.13.jar"/>
             </classpath>
         </java>
+        <!-- Unit tests with codecov report -->
+        <jacoco:coverage destfile="${test-src}/jacoco.exec" xmlns:jacoco="antlib:org.jacoco.ant" exclclassloader="sun.reflect.DelegatingClassLoader:javassist.Loader" >
+            <junit printsummary="yes" fork="yes" haltonfailure="yes">
+                <classpath>
+                    <pathelement location="vendor/junit-4.13.jar"/>
+                    <pathelement location="vendor/hamcrest-core-1.3.jar"/>
+                    <pathelement path="${test-build}"/>
+                    <pathelement path="${build-debug}"/>
+                </classpath>
+                <formatter type="plain"/>
+                <test name="TestCase" haltonfailure="no" outfile="test-report/result">
+                    <!-- <formatter type="xml"/> -->
+                </test>            
+            </junit>
+        </jacoco:coverage>
+        <jacoco:report xmlns:jacoco="antlib:org.jacoco.ant">
+            <executiondata>
+                <file file="${test-src}/jacoco.exec" />
+            </executiondata>
+
+            <structure name="Jacoco">
+                <classfiles>
+                    <fileset dir="${build}" />
+                </classfiles>
+                <sourcefiles encoding="UTF-8">
+                    <fileset dir="${src}" />
+                </sourcefiles>
+            </structure>
+
+            <!-- <check>
+                <rule element="METHOD">
+                    <limit counter="LINE" value="COVEREDRATIO" minimum="60%"/>
+                    <limit counter="CLASS" value="MISSEDCOUNT" maximum="0"/>
+                </rule>
+            </check>             -->
+
+            <html destdir="test-report/report" />
+            <xml destfile="test-report/report/report.xml" />
+
+        </jacoco:report>        
         <jar destfile="${dist}/distance-calculator.jar" basedir="${build}"/>
     </target>
     <target name="clean" description="clean up">
         <delete dir="build"/>
+        <delete dir="build-debug"/>
         <delete dir="test-build"/>
+        <delete dir="test-report"/>
         <delete dir="dist"/>
+        <delete file="test/jacoco.exec"/>
     </target>
 </project>
