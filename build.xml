@@ -75,7 +75,7 @@
 
             <structure name="Jacoco">
                 <classfiles>
-                    <fileset dir="${build}" />
+                    <fileset dir="${build-debug}" />
                 </classfiles>
                 <sourcefiles encoding="UTF-8">
                     <fileset dir="${src}" />
