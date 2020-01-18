@@ -1,6 +1,13 @@
 [![Build Status](https://travis-ci.com/EachOneChew/Dijkstra-s-Algorithm-FEH.svg?branch=master)](https://travis-ci.com/EachOneChew/Dijkstra-s-Algorithm-FEH)
 
-![GitHub contributors](https://img.shields.io/github/contributors/EachOneChew/Dijkstra-s-Algorithm-FEH) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/EachOneChew/Dijkstra-s-Algorithm-FEH?include_prereleases) ![GitHub](https://img.shields.io/github/license/EachOneChew/Dijkstra-s-Algorithm-FEH)
+![codecov](https://codecov.io/gh/EachOneChew/Dijkstra-s-Algorithm-FEH/branch/master/graph/badge.svg)
+
+
+![GitHub contributors](https://img.shields.io/github/contributors/EachOneChew/Dijkstra-s-Algorithm-FEH)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/EachOneChew/Dijkstra-s-Algorithm-FEH?include_prereleases)
+![GitHub repo size](https://img.shields.io/github/repo-size/EachOneChew/Dijkstra-s-Algorithm-FEH)
+![GitHub](https://img.shields.io/github/license/EachOneChew/Dijkstra-s-Algorithm-FEH)
+
 
 # How to Build
 
@@ -54,6 +61,8 @@ test:
 BUILD SUCCESSFUL
 Total time: 2 seconds
 ```
+
+You can find code coverage report in folder `test-report/report/index.html`.
 
 If you want to clean up your build, run command below:
 

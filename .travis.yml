@@ -1,6 +1,11 @@
+env:
+  global:
+    - CODECOV_TOKEN=ecc9ac7e-81ca-41b6-9aa3-5e815ef14738
 os:
   - linux
   - osx
 language: java
 script:
   - ./build.sh
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
