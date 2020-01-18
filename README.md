@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/EachOneChew/Dijkstra-s-Algorithm-FEH.svg?branch=master)](https://travis-ci.com/EachOneChew/Dijkstra-s-Algorithm-FEH)
+
 ![codecov](https://codecov.io/gh/EachOneChew/Dijkstra-s-Algorithm-FEH/branch/master/graph/badge.svg)
 
 
@@ -6,6 +7,7 @@
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/EachOneChew/Dijkstra-s-Algorithm-FEH?include_prereleases)
 ![GitHub repo size](https://img.shields.io/github/repo-size/EachOneChew/Dijkstra-s-Algorithm-FEH)
 ![GitHub](https://img.shields.io/github/license/EachOneChew/Dijkstra-s-Algorithm-FEH)
+
 
 # How to Build
 

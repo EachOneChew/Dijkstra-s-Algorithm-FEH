@@ -33,6 +33,7 @@
     <target name="compile" depends="checkstyle">
         <javac srcdir="${src}" destdir="${build}" includeantruntime="false"/>
     </target>
+
     <target name="compile-debug" depends="compile">
         <javac srcdir="${src}" destdir="${build-debug}" debug="true" includeantruntime="false"/>
     </target>
@@ -46,6 +47,7 @@
     </target>
     <target name="test" depends="test-compile">
         <!-- A simple main test -->
+        <javac srcdir="${test-src}" destdir="${test-build}" classpath="${build}" includeantruntime="
         <java classname="Main">
             <classpath>
                 <pathelement path="${test-build}"/>

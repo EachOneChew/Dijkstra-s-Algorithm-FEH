@@ -3,6 +3,7 @@ build/*
 build-debug/*
 test-build/*
 test-report/*
+test-build/*
 dist/*
 checkstyle_report.xml
 # OSX
