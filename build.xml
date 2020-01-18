@@ -63,9 +63,11 @@
                     <pathelement path="${build-debug}"/>
                 </classpath>
                 <formatter type="plain"/>
-                <test name="TestCase" haltonfailure="no" outfile="test-report/result">
+                <batchtest haltonfailure="no" todir="test-report">
                     <!-- <formatter type="xml"/> -->
-                </test>            
+                    <fileset dir="${test-src}" includes="**/*Test*.java"/>
+                        
+                </batchtest>            
             </junit>
         </jacoco:coverage>
         <jacoco:report xmlns:jacoco="antlib:org.jacoco.ant">
@@ -75,7 +77,7 @@
 
             <structure name="Jacoco">
                 <classfiles>
-                    <fileset dir="${build}" />
+                    <fileset dir="${build-debug}" />
                 </classfiles>
                 <sourcefiles encoding="UTF-8">
                     <fileset dir="${src}" />
