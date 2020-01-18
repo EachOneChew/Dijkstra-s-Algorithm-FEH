@@ -47,7 +47,7 @@
     </target>
     <target name="test" depends="test-compile">
         <!-- A simple main test -->
-        <javac srcdir="${test-src}" destdir="${test-build}" classpath="${build}" includeantruntime="
+        <javac srcdir="${test-src}" destdir="${test-build}" classpath="${build}" includeantruntime="false">
         <java classname="Main">
             <classpath>
                 <pathelement path="${test-build}"/>
