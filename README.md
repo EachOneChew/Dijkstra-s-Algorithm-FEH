@@ -3,7 +3,6 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/EachOneChew/Dijkstra-s-Algorithm-FEH)
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/EachOneChew/Dijkstra-s-Algorithm-FEH?include_prereleases)
 ![GitHub repo size](https://img.shields.io/github/repo-size/EachOneChew/Dijkstra-s-Algorithm-FEH)
-![GitHub](https://img.shields.io/github/license/EachOneChew/Dijkstra-s-Algorithm-FEH)
 
 # How to Use DistanceCalculator
 
