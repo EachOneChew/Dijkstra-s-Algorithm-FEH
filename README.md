@@ -33,9 +33,11 @@ Upon solveDistance's completion, the following has happened:
 
 * the DistanceCalculator's `Node[][]` "labeledBoard" has been populated appropriately with distances according to Dijkstra's Algorithm
 
-Next, determineTarget should be run.
+Next, determineTarget should be run, evaluating for the best target through consideration of the following factors:
 
-* DETAILS TBA
+* Minimum distance to candidate
+* Combat result with candidate
+* Enemy threat level on "optimal" location on which combat will take place
 
 Now, in order to determine a unit's path, pass the results into solvePath, which takes the inputs:
 
